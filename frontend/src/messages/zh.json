@@ -1,0 +1,57 @@
+{
+	"common": {
+		"loading": "加载中...",
+		"error": "出错了",
+		"retry": "重试",
+		"save": "保存",
+		"cancel": "取消",
+		"delete": "删除",
+		"edit": "编辑",
+		"create": "创建",
+		"search": "搜索",
+		"noData": "暂无数据",
+		"language": {
+			"en": "英文",
+			"zh": "中文"
+		}
+	},
+	"nav": {
+		"home": "首页",
+		"about": "关于",
+		"items": "项目列表"
+	},
+	"home": {
+		"title": "全栈快速开发框架",
+		"subtitle": "基于 Next.js + FastAPI + PostgreSQL",
+		"description": "一个现代化的全栈开发脚手架，助你快速启动项目",
+		"getStarted": "开始使用",
+		"viewDocs": "查看文档",
+		"features": {
+			"title": "核心特性",
+			"frontend": {
+				"title": "现代前端",
+				"description": "Next.js 14 + React 18 + Tailwind CSS"
+			},
+			"backend": {
+				"title": "高性能后端",
+				"description": "FastAPI + SQLAlchemy + PostgreSQL"
+			},
+			"i18n": {
+				"title": "多语言支持",
+				"description": "开箱即用的国际化方案"
+			},
+			"responsive": {
+				"title": "响应式设计",
+				"description": "适配各种屏幕尺寸"
+			}
+		}
+	},
+	"items": {
+		"title": "项目列表",
+		"create": "新建项目",
+		"name": "名称",
+		"description": "描述",
+		"createdAt": "创建时间",
+		"actions": "操作"
+	}
+}

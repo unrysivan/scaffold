@@ -1,0 +1,57 @@
+{
+	"common": {
+		"loading": "Loading...",
+		"error": "Something went wrong",
+		"retry": "Retry",
+		"save": "Save",
+		"cancel": "Cancel",
+		"delete": "Delete",
+		"edit": "Edit",
+		"create": "Create",
+		"search": "Search",
+		"noData": "No data",
+		"language": {
+			"en": "English",
+			"zh": "Chinese"
+		}
+	},
+	"nav": {
+		"home": "Home",
+		"about": "About",
+		"items": "Items"
+	},
+	"home": {
+		"title": "Full-Stack Scaffold",
+		"subtitle": "Built with Next.js + FastAPI + PostgreSQL",
+		"description": "A modern full-stack development scaffold to kickstart your project",
+		"getStarted": "Get Started",
+		"viewDocs": "View Docs",
+		"features": {
+			"title": "Core Features",
+			"frontend": {
+				"title": "Modern Frontend",
+				"description": "Next.js 14 + React 18 + Tailwind CSS"
+			},
+			"backend": {
+				"title": "High-Performance Backend",
+				"description": "FastAPI + SQLAlchemy + PostgreSQL"
+			},
+			"i18n": {
+				"title": "Internationalization",
+				"description": "Out-of-the-box i18n support"
+			},
+			"responsive": {
+				"title": "Responsive Design",
+				"description": "Adapts to all screen sizes"
+			}
+		}
+	},
+	"items": {
+		"title": "Items",
+		"create": "Create Item",
+		"name": "Name",
+		"description": "Description",
+		"createdAt": "Created At",
+		"actions": "Actions"
+	}
+}
