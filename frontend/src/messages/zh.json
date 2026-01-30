@@ -22,10 +22,10 @@
 	},
 	"home": {
 		"title": "全栈快速开发框架",
-		"subtitle": "基于 Next.js + FastAPI + PostgreSQL",
+		"subtitle": "基于 Next.js + Hono.js + Cloudflare",
 		"description": "一个现代化的全栈开发脚手架，助你快速启动项目",
 		"getStarted": "开始使用",
-		"viewDocs": "查看文档",
+		"viewDocs": "API 状态",
 		"features": {
 			"title": "核心特性",
 			"frontend": {
@@ -33,8 +33,8 @@
 				"description": "Next.js 14 + React 18 + Tailwind CSS"
 			},
 			"backend": {
-				"title": "高性能后端",
-				"description": "FastAPI + SQLAlchemy + PostgreSQL"
+				"title": "Serverless 后端",
+				"description": "Hono.js + Drizzle ORM + Cloudflare D1"
 			},
 			"i18n": {
 				"title": "多语言支持",

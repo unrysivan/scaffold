@@ -22,10 +22,10 @@
 	},
 	"home": {
 		"title": "Full-Stack Scaffold",
-		"subtitle": "Built with Next.js + FastAPI + PostgreSQL",
+		"subtitle": "Built with Next.js + Hono.js + Cloudflare",
 		"description": "A modern full-stack development scaffold to kickstart your project",
 		"getStarted": "Get Started",
-		"viewDocs": "View Docs",
+		"viewDocs": "API Health",
 		"features": {
 			"title": "Core Features",
 			"frontend": {
@@ -33,8 +33,8 @@
 				"description": "Next.js 14 + React 18 + Tailwind CSS"
 			},
 			"backend": {
-				"title": "High-Performance Backend",
-				"description": "FastAPI + SQLAlchemy + PostgreSQL"
+				"title": "Serverless Backend",
+				"description": "Hono.js + Drizzle ORM + Cloudflare D1"
 			},
 			"i18n": {
 				"title": "Internationalization",

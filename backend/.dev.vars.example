@@ -1,0 +1,5 @@
+# Development environment variables
+# Copy this file to .dev.vars for local development
+
+ENVIRONMENT=development
+CORS_ORIGINS=http://localhost:3000

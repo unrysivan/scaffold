@@ -1,0 +1,21 @@
+name = "scaffold-api"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+# D1 Database
+[[d1_databases]]
+binding = "DB"
+database_name = "scaffold-db"
+database_id = "" # Will be filled after creating database
+
+# Environment Variables
+[vars]
+ENVIRONMENT = "production"
+
+# CORS origins (comma-separated)
+[env.production.vars]
+CORS_ORIGINS = "https://yourdomain.com"
+
+[env.development]
+[env.development.vars]
+CORS_ORIGINS = "http://localhost:3000"

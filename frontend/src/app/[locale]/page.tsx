@@ -24,7 +24,7 @@ export default function HomePage() {
                 {t('getStarted')}
               </Link>
               <a
-                href="http://localhost:8000/docs"
+                href="http://localhost:8787/health"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn bg-white/10 text-white hover:bg-white/20 px-6 py-3 text-base"
