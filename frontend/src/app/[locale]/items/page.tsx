@@ -1,5 +1,7 @@
 'use client';
 
+export const runtime = 'edge';
+
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { api, type PaginatedResponse } from '@/lib/api';
@@ -33,7 +35,7 @@ export default function ItemsPage() {
     setError(null);
 
     const { data, error: err } = await api.get<PaginatedResponse<Item>>(
-      `/api/v1/items?page=${page}&size=10`
+      `/api/items?page=${page}&size=10`
     );
 
     if (err) {
@@ -56,7 +58,7 @@ export default function ItemsPage() {
 
     if (editingItem) {
       const { error: err } = await api.put(
-        `/api/v1/items/${editingItem.id}`,
+        `/api/items/${editingItem.id}`,
         formData
       );
       if (err) {
@@ -66,7 +68,7 @@ export default function ItemsPage() {
         resetForm();
       }
     } else {
-      const { error: err } = await api.post('/api/v1/items', formData);
+      const { error: err } = await api.post('/api/items', formData);
       if (err) {
         setError(err);
       } else {
@@ -87,7 +89,7 @@ export default function ItemsPage() {
   const handleDelete = async (id: number) => {
     if (!confirm('确定要删除吗？')) return;
 
-    const { error: err } = await api.delete(`/api/v1/items/${id}`);
+    const { error: err } = await api.delete(`/api/items/${id}`);
     if (err) {
       setError(err);
     } else {

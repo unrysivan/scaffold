@@ -8,7 +8,7 @@
 		"deploy": "wrangler deploy",
 		"db:generate": "drizzle-kit generate",
 		"db:migrate": "wrangler d1 execute scaffold-db --local --file=./migrations/0001_initial.sql",
-		"db:migrate:prod": "wrangler d1 execute scaffold-db --file=./migrations/0001_initial.sql",
+		"db:migrate:prod": "wrangler d1 execute scaffold-db --remote --file=./migrations/0001_initial.sql",
 		"db:studio": "drizzle-kit studio",
 		"type-check": "tsc --noEmit"
 	},

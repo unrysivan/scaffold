@@ -50,6 +50,11 @@ scaffold/
     └── deploy-cloudflare.sh
 ```
 
+## 📚 重要文档
+
+- **[ENV.md](./ENV.md)** - 🔑 环境配置详细说明（**强烈推荐阅读**）
+- **[DEPLOY.md](./DEPLOY.md)** - 🚀 完整部署指南
+
 ## 快速开始
 
 ### 本地开发

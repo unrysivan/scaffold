@@ -370,7 +370,49 @@ echo "NEXT_PUBLIC_API_URL=https://your-api-url.workers.dev" > frontend/.env.prod
 pnpm run pages:build
 ```
 
-### 4. Worker 部署超时
+### 4. Edge Runtime 配置错误
+
+**错误：** `The following routes were not configured to run with the Edge Runtime`
+
+**原因：** Cloudflare Pages 需要所有动态路由使用 Edge Runtime
+
+**解决：**
+
+在页面文件顶部添加：
+
+```typescript
+// 服务端组件
+export const runtime = 'edge';
+
+export default function Page() {
+  // ...
+}
+```
+
+或对于客户端组件：
+
+```typescript
+'use client';
+
+export const runtime = 'edge';
+
+import { useState } from 'react';
+// ...
+```
+
+### 5. pnpm 锁文件过期
+
+**错误：** `ERR_PNPM_OUTDATED_LOCKFILE`
+
+**解决：**
+
+```bash
+cd frontend
+rm pnpm-lock.yaml
+pnpm install
+```
+
+### 6. Worker 部署超时
 
 **解决：**
 
@@ -383,7 +425,38 @@ rm -rf backend/node_modules
 cd backend && pnpm install --prod
 ```
 
-### 5. Pages 部署后 404
+### 7. Pages 部署后 Node.js 兼容性错误
+
+**错误：** `Node.JS Compatibility Error - no nodejs_compat compatibility flag set`
+
+**原因：** Next.js 使用了 Node.js API，需要启用兼容性标志
+
+**解决方式1（推荐）：**
+
+在 Cloudflare Dashboard 中设置：
+1. 进入 **Pages** → 你的项目
+2. **Settings** → **Functions**
+3. 在 **Compatibility flags** 添加 `nodejs_compat`
+4. 保存（立即生效，无需重新部署）
+
+**解决方式2：**
+
+更新 `frontend/wrangler.toml`：
+
+```toml
+name = "scaffold-frontend"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+```
+
+然后重新部署：
+```bash
+cd frontend
+pnpm run pages:deploy
+```
+
+### 8. Pages 部署后 404
 
 **原因：** Next.js 路由配置问题
 

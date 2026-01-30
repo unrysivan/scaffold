@@ -12,7 +12,7 @@ import type { Env } from '@/types';
 const items = new Hono<{ Bindings: Env }>();
 
 /**
- * GET /api/v1/items
+ * GET /api/items
  * List all items with pagination
  */
 items.get('/', zValidator('query', listItemsQuerySchema), async (c) => {
@@ -34,7 +34,7 @@ items.get('/', zValidator('query', listItemsQuerySchema), async (c) => {
 });
 
 /**
- * GET /api/v1/items/:id
+ * GET /api/items/:id
  * Get single item by ID
  */
 items.get('/:id', zValidator('param', itemParamsSchema), async (c) => {
@@ -51,7 +51,7 @@ items.get('/:id', zValidator('param', itemParamsSchema), async (c) => {
 });
 
 /**
- * POST /api/v1/items
+ * POST /api/items
  * Create new item
  */
 items.post('/', zValidator('json', createItemSchema), async (c) => {
@@ -64,7 +64,7 @@ items.post('/', zValidator('json', createItemSchema), async (c) => {
 });
 
 /**
- * PUT /api/v1/items/:id
+ * PUT /api/items/:id
  * Update item
  */
 items.put(
@@ -87,7 +87,7 @@ items.put(
 );
 
 /**
- * DELETE /api/v1/items/:id
+ * DELETE /api/items/:id
  * Delete item
  */
 items.delete('/:id', zValidator('param', itemParamsSchema), async (c) => {

@@ -6,16 +6,14 @@ compatibility_date = "2024-01-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "scaffold-db"
-database_id = "" # Will be filled after creating database
+database_id = "4fd8b58f-701c-42b1-9b6c-d15c2a053587" # Will be filled after creating database
 
 # Environment Variables
 [vars]
 ENVIRONMENT = "production"
+CORS_ORIGINS = "https://scaffold-frontend.pages.dev"
 
-# CORS origins (comma-separated)
-[env.production.vars]
-CORS_ORIGINS = "https://yourdomain.com"
-
+# Development Environment
 [env.development]
 [env.development.vars]
 CORS_ORIGINS = "http://localhost:3000"

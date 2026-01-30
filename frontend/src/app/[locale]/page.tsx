@@ -1,6 +1,10 @@
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
+export const runtime = 'edge';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8787';
+
 export default function HomePage() {
   const t = useTranslations('home');
 
@@ -24,7 +28,7 @@ export default function HomePage() {
                 {t('getStarted')}
               </Link>
               <a
-                href="http://localhost:8787/health"
+                href={`${API_URL}/health`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn bg-white/10 text-white hover:bg-white/20 px-6 py-3 text-base"

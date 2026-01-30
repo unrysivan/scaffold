@@ -33,7 +33,7 @@ app.get('/health', (c) => {
 const api = new Hono<{ Bindings: Env }>();
 api.route('/items', itemsRoutes);
 
-app.route('/api/v1', api);
+app.route('/api', api);
 
 // 404 handler
 app.notFound((c) => {
