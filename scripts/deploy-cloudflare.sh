@@ -29,26 +29,9 @@ if [ ! -d "node_modules" ]; then
     pnpm install
 fi
 
-# Upload secrets from .dev.vars
-if [ -f ".dev.vars" ]; then
-    echo "Processing .dev.vars for secrets..."
-    while IFS='=' read -r key value; do
-        # Skip comments, empty lines, and CORS_ORIGINS (env var, not secret)
-        if [[ $key =~ ^#.*$ ]] || [[ -z $key ]] || [[ $key == "CORS_ORIGINS" ]]; then
-            continue
-        fi
-
-        # Clean value (remove carriage returns)
-        value=$(echo "$value" | tr -d '\r')
-
-        echo "Uploading secret: $key"
-        # Use printf to avoid echo escaping issues and pipe to wrangler secret put
-        printf "%s" "$value" | wrangler secret put "$key" > /dev/null
-    done < ".dev.vars"
-    echo -e "${GREEN}✅ Secrets uploaded!${NC}"
-else
-    echo "⚠️  .dev.vars not found, skipping secret upload."
-fi
+# Upload secrets from .dev.vars - DISABLED by user request for manual dashboard configuration
+# Secrets should be configured in Cloudflare Dashboard -> Settings -> Variables and Secrets
+echo -e "${BLUE}ℹ️  Note: Secrets upload skipped. Please ensure secrets (OPENAI_API_KEY, etc.) are set in Cloudflare Dashboard.${NC}"
 
 # Apply database migrations
 echo "Run database migrations..."
