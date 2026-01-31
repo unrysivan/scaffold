@@ -12,7 +12,7 @@
 
 2. **环境文件读取顺序**（按优先级）
    - `.env.local` - 本地开发（被 Git 忽略）
-   - `.env.production` - 生产环境（已删除，改用构建脚本）
+   - `.env.production` - 生产环境（构建时自动加载）
    - `.env` - 所有环境的默认值
 
 ---
@@ -22,6 +22,7 @@
 ### 前端（Frontend）
 
 #### 本地开发
+
 ```bash
 # 文件：frontend/.env.local
 NEXT_PUBLIC_API_URL=http://localhost:8787
@@ -31,21 +32,30 @@ NEXT_PUBLIC_API_URL=http://localhost:8787
 - 前端调用本地 Workers 开发服务器（`http://localhost:8787`）
 
 #### 生产部署
+
 ```json
 // 文件：frontend/package.json
 {
-  "scripts": {
-    "pages:build:prod": "NEXT_PUBLIC_API_URL=https://scaffold-api.unrysivan.workers.dev npx @cloudflare/next-on-pages",
-    "pages:deploy": "npm run pages:build:prod && wrangler pages deploy ..."
-  }
+	"scripts": {
+		"pages:build:prod": "npx @cloudflare/next-on-pages",
+		"pages:deploy": "npm run pages:build:prod && wrangler pages deploy ..."
+	}
 }
 ```
 
+#### 生产环境变量文件
+
+```bash
+# 文件：frontend/.env.production
+NEXT_PUBLIC_API_URL=https://scaffold-api.unrysivan.workers.dev
+```
+
 - 运行 `pnpm run pages:deploy`
-- 构建时通过**命令行**注入 `NEXT_PUBLIC_API_URL`
+- Next.js 构建时会自动读取 `.env.production`
 - 前端调用生产 Worker（`https://scaffold-api.unrysivan.workers.dev`）
 
 #### 代码中的使用
+
 ```typescript
 // frontend/src/lib/api.ts
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8787';
@@ -62,6 +72,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8787';
 ### 后端（Backend）
 
 #### 本地开发
+
 ```toml
 # 文件：backend/wrangler.toml
 [env.development]
@@ -73,6 +84,7 @@ CORS_ORIGINS = "http://localhost:3000"
 - 允许来自 `http://localhost:3000` 的跨域请求
 
 #### 生产部署
+
 ```toml
 # 文件：backend/wrangler.toml
 [vars]
@@ -90,22 +102,24 @@ CORS_ORIGINS = "https://scaffold-frontend.pages.dev"
 ### ✅ 正确做法
 
 1. **本地开发**
+
    ```bash
    # 后端
    cd backend
    pnpm run dev  # 启动在 localhost:8787
-   
+
    # 前端
    cd frontend
    pnpm run dev  # 自动读取 .env.local
    ```
 
 2. **生产部署**
+
    ```bash
    # 后端
    cd backend
    pnpm run deploy
-   
+
    # 前端
    cd frontend
    pnpm run pages:deploy  # 自动使用生产 API URL
@@ -140,10 +154,10 @@ CORS_ORIGINS = "https://scaffold-frontend.pages.dev"
 
 ## 💡 快速参考
 
-| 场景 | 前端地址 | 后端地址 | 配置文件 |
-|------|---------|---------|---------|
-| 本地开发 | `http://localhost:3000` | `http://localhost:8787` | `frontend/.env.local` |
-| 生产环境 | `https://scaffold-frontend.pages.dev` | `https://scaffold-api.unrysivan.workers.dev` | `frontend/package.json` (构建脚本) |
+| 场景     | 前端地址                              | 后端地址                                     | 配置文件                   |
+| -------- | ------------------------------------- | -------------------------------------------- | -------------------------- |
+| 本地开发 | `http://localhost:3000`               | `http://localhost:8787`                      | `frontend/.env.local`      |
+| 生产环境 | `https://scaffold-frontend.pages.dev` | `https://scaffold-api.unrysivan.workers.dev` | `frontend/.env.production` |
 
 ---
 
