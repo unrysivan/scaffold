@@ -18,7 +18,7 @@ cd backend
 # Check if database_id is set
 if ! grep -q "database_id = \"[^\"]\+\"" wrangler.toml; then
     echo -e "${RED}⚠️  Warning: database_id is empty in wrangler.toml${NC}"
-    echo "Please run: wrangler d1 create journey-assistant-db"
+    echo "Please run: wrangler d1 create scaffold-db"
     echo "And update the database_id in wrangler.toml"
     exit 1
 fi
@@ -35,7 +35,7 @@ echo -e "${BLUE}ℹ️  Note: Secrets upload skipped. Please ensure secrets (OPE
 
 # Apply database migrations
 echo "Run database migrations..."
-pnpm wrangler d1 migrations apply journey-assistant-db --remote
+pnpm wrangler d1 migrations apply scaffold-db --remote
 
 # Deploy Workers
 echo "Deploying Workers..."
@@ -75,7 +75,7 @@ echo "NEXT_PUBLIC_API_URL=$WORKER_URL" > .env.production
 # Build and deploy
 echo "Building and deploying frontend..."
 NEXT_PUBLIC_API_URL=$WORKER_URL pnpm run pages:build
-pnpm wrangler pages deploy .vercel/output/static --project-name=journey-assistant-frontend
+pnpm wrangler pages deploy .vercel/output/static --project-name=scaffold-frontend
 
 cd ..
 
