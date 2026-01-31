@@ -18,7 +18,7 @@ cd backend
 # Check if database_id is set
 if ! grep -q "database_id = \"[^\"]\+\"" wrangler.toml; then
     echo -e "${RED}⚠️  Warning: database_id is empty in wrangler.toml${NC}"
-    echo "Please run: wrangler d1 create scaffold-db"
+    echo "Please run: wrangler d1 create journey-assistant-db"
     echo "And update the database_id in wrangler.toml"
     exit 1
 fi
@@ -29,13 +29,43 @@ if [ ! -d "node_modules" ]; then
     pnpm install
 fi
 
+# Upload secrets from .dev.vars
+if [ -f ".dev.vars" ]; then
+    echo "Processing .dev.vars for secrets..."
+    while IFS='=' read -r key value; do
+        # Skip comments, empty lines, and CORS_ORIGINS (env var, not secret)
+        if [[ $key =~ ^#.*$ ]] || [[ -z $key ]] || [[ $key == "CORS_ORIGINS" ]]; then
+            continue
+        fi
+
+        # Clean value (remove carriage returns)
+        value=$(echo "$value" | tr -d '\r')
+
+        echo "Uploading secret: $key"
+        # Use printf to avoid echo escaping issues and pipe to wrangler secret put
+        printf "%s" "$value" | wrangler secret put "$key" > /dev/null
+    done < ".dev.vars"
+    echo -e "${GREEN}✅ Secrets uploaded!${NC}"
+else
+    echo "⚠️  .dev.vars not found, skipping secret upload."
+fi
+
+# Apply database migrations
+echo "Run database migrations..."
+pnpm wrangler d1 migrations apply journey-assistant-db --remote
+
 # Deploy Workers
 echo "Deploying Workers..."
-pnpm run deploy
+# Capture output to file to preserve colors/formatting on screen while parsing
+deploy_output=$(pnpm run deploy 2>&1 | tee /dev/tty)
 
-WORKER_URL=$(wrangler deployments list --name scaffold-api 2>/dev/null | grep "https://" | head -1 | awk '{print $2}')
+# Extract URL from output (looking for https://*.workers.dev)
+WORKER_URL=$(echo "$deploy_output" | grep -o "https://[a-zA-Z0-9.-]*\.workers\.dev" | tail -1)
+
 if [ -z "$WORKER_URL" ]; then
-    WORKER_URL="https://scaffold-api.your-subdomain.workers.dev"
+    echo -e "${RED}⚠️  Could not auto-detect Worker URL.${NC}"
+    WORKER_URL="https://scaffold-api.unrysivan.workers.dev"
+    echo -e "Using fallback: ${WORKER_URL}"
 fi
 
 echo -e "${GREEN}✅ Backend deployed successfully!${NC}"
@@ -59,9 +89,10 @@ echo "Updating API URL to: $WORKER_URL"
 echo "NEXT_PUBLIC_API_URL=$WORKER_URL" > .env.production
 
 # Build and deploy
+# Build and deploy
 echo "Building and deploying frontend..."
-pnpm run pages:build
-pnpm wrangler pages deploy .vercel/output/static --project-name=scaffold-frontend
+NEXT_PUBLIC_API_URL=$WORKER_URL pnpm run pages:build
+pnpm wrangler pages deploy .vercel/output/static --project-name=journey-assistant-frontend
 
 cd ..
 
